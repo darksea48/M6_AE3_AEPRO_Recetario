@@ -13,3 +13,8 @@ class Receta(models.Model):
 
     """def __str__(self):
         return self.nombre"""
+
+class EventosCulinarios(models.Model):
+    nombre = models.CharField(max_length=100)
+    fecha = models.DateField()
+    ubicacion = models.CharField(max_length=200)

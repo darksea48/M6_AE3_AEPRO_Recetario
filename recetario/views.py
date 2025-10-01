@@ -1,7 +1,9 @@
 from django.shortcuts import render
-from .models import Receta
+from .models import Receta, Evento
 
 # Create your views here.
+
+# Vistas y variables pertenecientes al sitio de recetas
 RECETAS = [
         Receta(
             imagen="https://i.postimg.cc/8PxcXTQn/Completo-italiano.jpg",
@@ -56,3 +58,12 @@ def detalle_receta(request, receta_index):
         receta = RECETAS[receta_index]
         return render(request, 'detalle_receta.html', {'receta': receta})
     return render(request, 'detalle_receta.html', {'receta': None})
+
+# Vistas y variables pertenecientes al sitio de eventos
+EVENTOS = []
+
+def eventos(request):
+    return render(request, 'eventos.html', {'eventos': EVENTOS})
+
+def nuevo_evento(request):
+    return
