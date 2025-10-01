@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Recetas{% endblock %}
+
+{% load static %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'css/styles_recetas.css' %}" />
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-3 pb-4 mb-0" id="gallery">
+    <div class="row justify-content-center">
+        <h2 class="text-center text-dark my-4">Recetas</h2>
+        <div class="col-md-10 col-10">
+            <div class="row">
+              <!-- generamos las fotos de manera dinámica con un bucle de Django -->
+                {% for receta in recetas %}
+                  <div class="col-xl-4 col-sm-6">
+                    <a href="{% url 'detalle_receta' forloop.counter0 %}" class="text-decoration-none text-dark">
+                      <div id="receta-{{ receta.id }}" class="card p-2 border border-dark shadow m-2 zoom shadow" style="cursor: pointer;">
+                          <img class="fotografia object-fit-cover" src="{{ receta.imagen }}" alt="Foto de {{ receta.nombre }}" />
+                          <div class="card-body">
+                            <h5 class="card-title">{{ receta.nombre }}</h5>
+                            <p class="card-text">{{ receta.descripcion|truncatewords:25 }}</p>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

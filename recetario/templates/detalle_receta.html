@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Recetas{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <!-- <div class="text-center mb-4"><a href="{% url 'recetas' %}" class="btn btn-primary">Volver a recetas</a></div> -->
+        <div class="col-md-6">
+            <div class="card mb-0 shadow">
+                <img src="{{ receta.imagen }}" class="card-img-top" alt="Imagen de {{ receta.nombre }}" style="height: 400px; width: auto;object-fit: cover;">
+                <div class="card-body">
+                    <h3 class="card-title text-center">{{ receta.nombre }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="mt-3">
+                <p class="text-center">{{ receta.descripcion }}</p>
+            </div>
+            <div class="mt-4">
+                <h4>Ingredientes:</h4>
+                <ul>
+                    {% for ingrediente in receta.ingredientes %}
+                    <li>{{ ingrediente }}</li>
+                    {% endfor %}
+                </ul>
+                {% if receta.optativos %}
+                <h5>Ingredientes opcionales:</h5>
+                <ul>
+                    {% for optativo in receta.optativos %}
+                    <li>{{ optativo }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+            </div>
+            <div>
+                <h4>Instrucciones:</h4>
+                <ol>
+                    {% for paso in receta.instrucciones %}
+                    <li>{{ paso }}</li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+        <div class="text-center mb-4"><a href="{% url 'recetas' %}" class="btn btn-primary">Volver a recetas</a></div>
+    </div>
+</div>
+{% endblock %}
