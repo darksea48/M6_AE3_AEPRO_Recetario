@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Receta, EventosCulinarios
 from .formularios import FormularioDeEvento
 
@@ -64,7 +64,20 @@ def detalle_receta(request, receta_index):
 EVENTOS = []
 
 def eventos(request):
-    return render(request, 'eventos.html', {'eventos': EVENTOS})
+    if request.method == 'POST':
+        formulario = FormularioDeEvento(request.POST)
+        if formulario.is_valid():
+            evento = formulario.cleaned_data['evento']
+            fecha = formulario.cleaned_data['fecha']
+            ubicacion = formulario.cleaned_data['ubicacion']
+            print("Informacion del formulario")
+            print(evento, fecha, ubicacion)
+            return redirect('evento_exito')
+        else:
+            return render(request, 'eventos.html', {'eventos': EVENTOS})
+    else:
+        formulario = FormularioDeEvento()    
+        return render(request, 'eventos.html', {'eventos': EVENTOS})
 
 def nuevo_evento(request):
-    return
+    return render (request, 'evento_exito.html' )
