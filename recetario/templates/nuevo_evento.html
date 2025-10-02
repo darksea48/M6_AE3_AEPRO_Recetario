@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Eventos{% endblock %}
+
+{% block content %}
+<div class="container mt-2">
+    <h1>Registra el evento</h1>
+    <div class="mt-3">
+        <form method="POST">
+            {% csrf_token %}
+
+            {{ formulario.as_p }}
+
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+
+        </form>
+
+    </div>
+</div>
+{% endblock %}

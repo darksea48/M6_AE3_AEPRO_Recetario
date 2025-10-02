@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Receta, EventosCulinarios
 from .formularios import FormularioDeEvento
+from django.utils import timezone
 
 # Create your views here.
 
@@ -64,20 +65,30 @@ def detalle_receta(request, receta_index):
 EVENTOS = []
 
 def eventos(request):
+    return render(request, 'eventos.html', {'eventos': EVENTOS})
+
+def nuevo_evento(request):
     if request.method == 'POST':
         formulario = FormularioDeEvento(request.POST)
         if formulario.is_valid():
             evento = formulario.cleaned_data['evento']
             fecha = formulario.cleaned_data['fecha']
             ubicacion = formulario.cleaned_data['ubicacion']
-            print("Informacion del formulario")
-            print(evento, fecha, ubicacion)
-            return redirect('evento_exito')
+            if fecha < timezone.now().date():
+                formulario.add_error('fecha', 'La fecha del evento no puede estar en el pasado.')
+                return render(request, 'nuevo_evento.html', {'formulario': formulario})
+            print("Informacion del formulario".center(50, '='))
+            print(f"Evento: {evento}")
+            print(f"Fecha: {fecha}")
+            print(f"Ubicacion: {ubicacion}")
+            print("="*50)
+            EVENTOS.append(EventosCulinarios(nombre=evento, fecha=fecha, ubicacion=ubicacion))
+            return redirect('evento_exitoso')
         else:
-            return render(request, 'eventos.html', {'eventos': EVENTOS})
+            return render(request, 'nuevo_evento.html', {'formulario': formulario})
     else:
-        formulario = FormularioDeEvento()    
-        return render(request, 'eventos.html', {'eventos': EVENTOS})
+        formulario = FormularioDeEvento()
+        return render(request, 'nuevo_evento.html', {'formulario': formulario})
 
-def nuevo_evento(request):
-    return render (request, 'evento_exito.html' )
+def evento_exitoso(request):
+    return render(request, 'evento_exitoso.html')

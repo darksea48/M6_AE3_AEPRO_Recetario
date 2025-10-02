@@ -2,22 +2,25 @@
 
 {% block title %}Eventos{% endblock %}
 
-{% block container %}container{% endblock %}
-
 {% block content %}
+<div class="container">
+    <h1 class="mt-3 text-center">Eventos Culinarios</h1>
+    <p>¡Bienvenidos a la sección de eventos culinarios! Aquí podrás encontrar y compartir eventos relacionados con la gastronomía, desde talleres de cocina hasta degustaciones y ferias gastronómicas. Si tienes un evento que te gustaría compartir, no dudes en enviarlo a través del formulario a continuación.</p>
 
-<h1>Registra el evento</h1>
-<div class="mt-3">
-    <form action="POST">
-        {% csrf_token %}
-
-        {{ formulario.as_p }}
-        
-        <button type="submit" class=" btn btn-primary">Submit</button>
-
-
-    </form>
-
+    {% if eventos %}
+        <h3 class="mt-2">Próximos Eventos</h3>
+        <div class="list-group mt-3 mb-5">
+            {% for evento in eventos %}
+                <div class="list-group-item">
+                    <h5 class="mb-1">{{ evento.nombre }}</h5>
+                    <p class="mb-1"><strong>Fecha:</strong> {{ evento.fecha }}</p>
+                    <p class="mb-1"><strong>Ubicación:</strong> {{ evento.ubicacion }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="mt-4">No hay eventos disponibles en este momento. ¡Sé el primero en agregar uno!</p>
+    {% endif %}
+    <a href="{% url 'nuevo_evento' %}" class="btn btn-primary mb-3">Agregar Evento</a>
 </div>
-
 {% endblock %}
