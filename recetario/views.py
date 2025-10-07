@@ -2,6 +2,13 @@ from django.shortcuts import render, redirect
 from .models import Receta, EventosCulinarios
 from .formularios import FormularioDeEvento
 from django.utils import timezone
+#clases genéricas
+from django.views.generic import ListView, TemplateView
+#mixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+# autenticación
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth.decorators import login_required, permission_required
 
 # Create your views here.
 
@@ -92,3 +99,24 @@ def nuevo_evento(request):
 
 def evento_exitoso(request):
     return render(request, 'evento_exitoso.html')
+
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get ['username']
+        password = request.POST.get ['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            auth_login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'login.html', {'error': 'Credenciales inválidas'})
+    else:
+        return render(request, 'login.html')
+    
+def logout_view(request):
+    auth_logout(request)
+    return redirect('login')
+
+class PaginaProhibida(TemplateView):
+    template_name = 'pagina_prohibida.html'
