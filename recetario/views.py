@@ -118,5 +118,9 @@ def logout_view(request):
     auth_logout(request)
     return redirect('login')
 
+class EditarEvento( TemplateView):
+    template_name = 'editar_evento.html'
+    
+
 class PaginaProhibida(TemplateView):
     template_name = 'pagina_prohibida.html'

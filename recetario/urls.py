@@ -12,5 +12,6 @@ urlpatterns = [
     path('eventos/exitoso', views.evento_exitoso, name='evento_exitoso'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name="logout"),
+    path('editar/', EditarEvento.as_view(), name='editar_evento'),
     path('pagina_prohibida/', PaginaProhibida.as_view(),name='pagina_prohibida'),
 ]
