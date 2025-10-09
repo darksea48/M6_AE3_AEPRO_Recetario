@@ -1,12 +1,9 @@
 from django.shortcuts import render, redirect
-from .models import Receta, EventosCulinarios
+from .models import *
 from .formularios import FormularioDeEvento
-from django.utils import timezone
-#clases genéricas
-from django.views.generic import ListView, TemplateView
-#mixin
+from datetime import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-# autenticación
+from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.decorators import login_required, permission_required
 
@@ -103,14 +100,14 @@ def evento_exitoso(request):
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get ['username']
-        password = request.POST.get ['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             auth_login(request, user)
             return redirect('home')
         else:
-            return render(request, 'login.html', {'error': 'Credenciales inválidas'})
+            return render(request, 'login.html', {'error_message': 'Credenciales inválidas. Por favor, inténtalo de nuevo.'})
     else:
         return render(request, 'login.html')
     
@@ -118,9 +115,13 @@ def logout_view(request):
     auth_logout(request)
     return redirect('login')
 
-class EditarEvento( TemplateView):
+class EditarEvento(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     template_name = 'editar_evento.html'
-    
+    permission_required = 'recetario.change_eventosculinarios'
+
+    def handle_no_permission(self):
+        # A dónde ir si no tiene permisos
+        return redirect('pagina_prohibida')
 
 class PaginaProhibida(TemplateView):
     template_name = 'pagina_prohibida.html'
