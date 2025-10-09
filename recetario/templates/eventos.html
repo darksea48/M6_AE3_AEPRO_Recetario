@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Eventos{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 d-flex flex-column align-items-center">
+        <div class="row">
+            <h1 class="text-center mb-4">Eventos Culinarios</h1>
+            <ul>
+                {% for evento in eventos %}
+                    <li>
+                        <strong>{{ evento.nombre }}</strong><br>
+                        Fecha: {{ evento.fecha }}<br>
+                        Ubicación: {{ evento.ubicacion }}<br>
+                        <a href="{% url 'editar_evento' evento.id %}">Editar</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a href="{% url 'nuevo_evento' %}">Crear Nuevo Evento</a>
+        </div>
+    </div>
+{% endblock %}
