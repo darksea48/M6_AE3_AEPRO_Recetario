@@ -53,6 +53,7 @@ RECETAS = [
 def home(request):
     return render(request, 'home.html')
 
+@login_required
 def recetas(request):
     return render(request, 'recetas.html', {'recetas': RECETAS})
 
@@ -67,7 +68,7 @@ def detalle_receta(request, receta_index):
 
 # Vistas y variables pertenecientes al sitio de eventos
 EVENTOS = []
-
+@login_required
 def eventos(request):
     return render(request, 'eventos.html', {'eventos': EVENTOS})
 
