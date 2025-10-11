@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from .formularios import FormularioDeEvento
-from datetime import timezone
+from django.utils import timezone
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import TemplateView
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
@@ -68,6 +68,7 @@ def detalle_receta(request, receta_index):
 
 # Vistas y variables pertenecientes al sitio de eventos
 EVENTOS = []
+
 @login_required
 def eventos(request):
     return render(request, 'eventos.html', {'eventos': EVENTOS})
@@ -115,6 +116,12 @@ def login_view(request):
 def logout_view(request):
     auth_logout(request)
     return redirect('login')
+
+def eliminar_evento(evento_id):
+    global EVENTOS
+    nuevo_eventos = [evento for evento in EVENTOS if id(evento) != evento_id]
+    EVENTOS = nuevo_eventos
+    return redirect('eventos')
 
 class EditarEvento(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     template_name = 'editar_evento.html'

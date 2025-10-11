@@ -14,4 +14,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name="logout"),
     path('editar/', EditarEvento.as_view(), name='editar_evento'),
     path('pagina_prohibida/', PaginaProhibida.as_view(),name='pagina_prohibida'),
+    path('evento/editar/<int:evento_id>/', EditarEvento.as_view(), name='editar_evento' ),
+    path('evento/eliminar/<int:evento_id>/', eliminar_evento, name='eliminar_evento'),
 ]

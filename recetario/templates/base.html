@@ -38,23 +38,21 @@
                         <a class="nav-link" href="{% url 'contacto' %}">Contacto</a>
                     </li>
                 </ul>
-                    <!-- incio y cierre de sesion -->
-                    <ul class="navbar-nav ms-auto">
-                {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <span class="navbar-text text-white me-2">
+                <!-- inicio y cierre de sesion -->
+                <ul class="navbar-nav ms-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item me-3 text-white">
                         Hola, {{ user.username }}
-                    </span>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'logout' %}">Cerrar sesión</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'login' %}">Iniciar sesión</a>
-                </li>
-                {% endif %}
-            </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'logout' %}">Cerrar sesión</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{% url 'login' %}">Iniciar sesión</a>
+                    </li>
+                    {% endif %}
+                </ul>
 
 
                 </ul>

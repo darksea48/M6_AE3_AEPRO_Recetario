@@ -12,10 +12,9 @@
                     <h4>{{ evento.nombre }} - {{ evento.ubicacion }}</h4>
                     <p>{{ evento.fecha }}</p>
                     {% if request.user.is_authenticated %}
-                        <a href="{% url 'editar_evento' evento.id %}">Editar</a>
-                        <a href="{% url 'eliminar_evento' evento.id %}">Eliminar</a>
+                        <a href="{% url 'editar_evento' forloop.counter0 %}">Editar</a>
+                        <a href="{% url 'eliminar_evento' forloop.counter0 %}">Eliminar</a>
                     {% endif %}
-                    <a href="{% url 'ver_evento' evento.id %}">Ver</a>
                 </li>
             {% empty %}
                 <li class="list-group-item">No hay eventos agendados.</li>
